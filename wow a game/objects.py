@@ -101,7 +101,7 @@ class Meteor(Opponent):
 
     _hitbox_cache = {}
 
-    def __init__(self, name, health, damage, speed, image,hitbox_radius:int=None):
+    def __init__(self, name, health, damage, speed, image,hitbox_radius:int=None): # type: ignore
         super().__init__(name, health, damage, speed, image)
         self.size = randint(50, 100)  # Size of the meteor
         self.image = pygame.transform.scale(self.image, (self.size, self.size))

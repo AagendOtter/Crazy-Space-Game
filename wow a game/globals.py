@@ -58,6 +58,8 @@ objects = [] #Liste aller Objekte
 player_bullets = [] #Liste aller Projektile, die der Spieler abgeschossen hat
 planets = [] #Liste aller Planeten, die es gibt
 
+to_buy = []
+
 
 
 

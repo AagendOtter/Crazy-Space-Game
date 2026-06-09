@@ -16,6 +16,7 @@ Bg = objects.Background(os.path.join(g.img_path,"back_space.jpeg"))
 
 def open_trade():
     tradeing = True
+    in_shop = g.to_buy[:3]
     while tradeing:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -24,6 +25,15 @@ def open_trade():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     tradeing = False
+            pressed = False
+            mousepos = pg.mouse.get_pos()
+            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                pressed = True
+
+        screen.fill(color=(0,0,0))
+
+        
+
 
         pg.display.update()
         g.clock.tick(60)
@@ -35,7 +45,7 @@ summon_meteor()
 tradeplanet = objects.Planet("Trade Planet", [0, 0], pg.image.load(os.path.join(g.img_path,"trade_planet.png")).convert_alpha(), 250, open_trade)
 g.planets.append(tradeplanet)
 
-arrow = objects.Pointer(tradeplanet, pg.transform.scale(pg.transform.rotate(pg.image.load(os.path.join(g.img_path,"arrow.png")).convert_alpha(), 0), (50, 50)))
+arrow = objects.Pointer(tradeplanet, pg.transform.scale(pg.transform.rotate(pg.image.load(os.path.join(g.img_path,"arrow.png")).convert_alpha(), 0), (50, 50))) # type: ignore
 
 
 while g.playing:
