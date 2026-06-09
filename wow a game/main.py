@@ -102,7 +102,3 @@ while g.playing:
     if g.debug:
         print(g.clock.get_rawtime(), "ms/tick & meteors:", len(g.objects), "player bullets:", len(g.player_bullets))
     
-    
-
-
-
