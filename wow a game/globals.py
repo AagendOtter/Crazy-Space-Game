@@ -17,7 +17,7 @@ pg.display.set_caption("Wow a game")
 
 
 #Bilder
-img_path = os.path.dirname(os.path.realpath(__file__))+"\images"
+img_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "images")
 
 player_base = pg.image.load(os.path.join(img_path,"SpaceShipSmall.png")).convert_alpha()
 player_hitbox_radius = 40#max(player_base.get_width(), player_base.get_height()) // 2
