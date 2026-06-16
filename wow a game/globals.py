@@ -1,8 +1,9 @@
 import pygame as pg
 import os
+import sys
 #base werte
 
-debug = True
+debug = False
 
 playing = True
 
@@ -10,9 +11,27 @@ clock = pg.time.Clock()
 
 
 #screen setup
+# Ensure the video subsystem is initialized before querying display info.
+if not pg.get_init():
+	pg.init()
+if not pg.display.get_init():
+	pg.display.init()
+
 #scr_width , scr_height = 800, 600
-scr_width , scr_height = pg.display.Info().current_w, pg.display.Info().current_h
+try:
+	display_w, display_h = pg.display.Info().current_w, pg.display.Info().current_h
+except pg.error:
+	display_w, display_h = 800, 600
+
+# macOS often clamps oversized resizable windows because of title bar and system UI.
+if sys.platform == "darwin":
+	scr_width = max(800, display_w - 32)
+	scr_height = max(600, display_h - 96)
+else:
+	scr_width, scr_height = display_w, display_h
+
 screen = pg.display.set_mode((scr_width, scr_height),pg.RESIZABLE)
+scr_width, scr_height = screen.get_size()
 pg.display.set_caption("Wow a game")
 
 
