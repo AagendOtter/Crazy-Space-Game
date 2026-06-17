@@ -24,9 +24,14 @@ def input():
     if keys[pygame.K_e] and globals.debug:
         summon_meteor(speed=0.2)   
     if keys[pygame.K_SPACE]:
-        if globals.cooldown <= 0:
-            globals.cooldown = 20 #cooldown von 20 ticks, damit nicht zu viele projektile auf einmal gespawnt werden
+        if globals.cooldown > 600:
+            shots = 10
+            globals.cooldown = 0
+            for i in range(shots):
+                shoot(10, 500, 10, int(i * 360/shots))
+        if globals.cooldown >= 20:
+            globals.cooldown = 0 #cooldown von 20 ticks, damit nicht zu viele projektile auf einmal gespawnt werden
             shoot(10, 500, 10)
     
-    globals.cooldown -= 1
+    globals.cooldown += 1
     move()
