@@ -175,6 +175,7 @@ class Bullet():
         self.half_w = self.image.get_width() / 2
         self.half_h = self.image.get_height() / 2
         self.alive = True
+        self.hitbox_radius = max(self.half_w, self.half_h)
 
     def move(self):
         self.position[0] += self.movement_x
@@ -186,7 +187,12 @@ class Bullet():
     
     def draw_data(self):
         return (self.image, (self.position[0] + g.pos_x - self.half_w, self.position[1] + g.pos_y - self.half_h))
-
+    
+    def collides_with(self, obj):
+        # Berechne quadrierter Abstand zwischen Bullet und Meteor (schneller ohne Wurzel)
+        dx = self.position[0] - (obj.position[0] + obj.size / 2)
+        dy = self.position[1] - (obj.position[1] + obj.size / 2)
+        return dx * dx + dy * dy <= (self.hitbox_radius + obj.hitbox_radius) ** 2
 class Planet():
     def __init__(self, name, position, image, size, geg_fkt=None):
         self.name = name

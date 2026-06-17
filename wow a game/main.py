@@ -115,24 +115,14 @@ def play_game() -> None:
 
         # Bullet-Meteor Kollisionserkennung
         meteors_to_remove = []
-        for bullet in g.player_bullets[:]:  # Erstellt Kopie und geht durch alle Bullets
+        for bullet in g.player_bullets:  # Erstellt Kopie und geht durch alle Bullets
             if not bullet.alive:
                 continue
-            for meteor in g.objects[:]:  # Erstellt Kopie und geht durch alle Meteore
-                # Berechne quadrierter Abstand zwischen Bullet und Meteor (schneller ohne Wurzel)
-                dx = bullet.position[0] - (meteor.position[0] + meteor.size / 2)
-                dy = bullet.position[1] - (meteor.position[1] + meteor.size / 2)
-                distance_squared = dx * dx + dy * dy
-                
-                # Collision wenn Abstand <= summe der Radii
-                bullet_radius = max(bullet.half_w, bullet.half_h)
-                collision_distance_squared = (bullet_radius + meteor.hitbox_radius) ** 2
-                if distance_squared <= collision_distance_squared:
+            for meteor in g.objects:  # Erstellt Kopie und geht durch alle Meteore
+                if bullet.collides_with(meteor):
                     if g.debug: # Zum Debuggen die Infos ausgeben
                         print(f"TREFFER! Bullet trifft {meteor.name}! Damage: {bullet.damage}, Meteor Health: {meteor.health - bullet.damage}")
-                    # Meteorit nimmt Schaden
                     meteor.health -= bullet.damage
-                    # Bullet stirbt sofort
                     bullet.alive = False
                     
                     # Wenn Meteorit tot, zum Entfernen markieren
