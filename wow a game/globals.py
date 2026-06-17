@@ -30,7 +30,7 @@ if sys.platform == "darwin":
 else:
 	scr_width, scr_height = display_w, display_h
 
-screen = pg.display.set_mode((scr_width, scr_height),pg.RESIZABLE)
+screen = pg.display.set_mode((scr_width, scr_height))
 scr_width, scr_height = screen.get_size()
 pg.display.set_caption("Wow a game")
 

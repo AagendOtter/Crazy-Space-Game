@@ -27,6 +27,25 @@ arrow = objects.Pointer(tradeplanet, pg.transform.scale(pg.transform.rotate(pg.i
 def start_screen():
     Bg.render()
     start = True
+
+    font = pg.font.SysFont("Consolas", 92, bold=True)
+    sec_font = pg.font.SysFont("Consolas", 40, bold=True)
+    crazy = font.render("Crazy", True, (255, 255, 255))
+    space= font.render("Space", True, (255, 255, 255))
+    game = font.render("Game", True, (255, 255, 255))
+    sec_text = sec_font.render("Press Enter to Start", True, (135, 206, 235))
+    crazy_rect = crazy.get_rect(center=(g.middle_x, g.middle_y - 80))
+    space_rect = space.get_rect(center=(g.middle_x, g.middle_y))
+    game_rect = game.get_rect(center=(g.middle_x, g.middle_y + 80))
+    sec_text_rect = sec_text.get_rect(center=(g.middle_x, g.middle_y + 160))
+
+    screen.blit(crazy, crazy_rect)
+    screen.blit(space, space_rect)
+    screen.blit(game, game_rect)
+    screen.blit(sec_text, sec_text_rect)
+
+    pg.display.update()
+    
     while start:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -36,23 +55,6 @@ def start_screen():
                 if event.key == pg.K_RETURN:
                     start = False
 
-        # screen.fill((0, 0, 0))
-        font = pg.font.SysFont("Consolas", 92, bold=True)
-        sec_font = pg.font.SysFont("Consolas", 40, bold=True)
-        crazy = font.render("Crazy", True, (255, 255, 255))
-        space= font.render("Space", True, (255, 255, 255))
-        game = font.render("Game", True, (255, 255, 255))
-        sec_text = sec_font.render("Press Enter to Start", True, (135, 206, 235))
-        crazy_rect = crazy.get_rect(center=(g.middle_x, g.middle_y - 80))
-        space_rect = space.get_rect(center=(g.middle_x, g.middle_y))
-        game_rect = game.get_rect(center=(g.middle_x, g.middle_y + 80))
-        sec_text_rect = sec_text.get_rect(center=(g.middle_x, g.middle_y + 160))
-        screen.blit(crazy, crazy_rect)
-        screen.blit(space, space_rect)
-        screen.blit(game, game_rect)
-        screen.blit(sec_text, sec_text_rect)
-
-        pg.display.update()
         g.clock.tick(60)
 
 def pause_screen():
