@@ -22,7 +22,7 @@ summon_meteor()
 tradeplanet = objects.Planet("Trade Planet", [0, 0], pg.image.load(os.path.join(g.img_path,"trade_planet.png")).convert_alpha(), 250, open_trade)
 g.planets.append(tradeplanet)
 
-arrow = objects.Pointer(tradeplanet, pg.transform.scale(pg.transform.rotate(pg.image.load(os.path.join(g.img_path,"arrow.png")).convert_alpha(), 0), (50, 50)))
+arrow = objects.Pointer(tradeplanet, pg.transform.scale(pg.transform.rotate(pg.image.load(os.path.join(g.img_path,"arrow.png")).convert_alpha(), 0), (50, 50))) # type: ignore
 
 def start_screen():
     Bg.render()
@@ -108,15 +108,10 @@ def play_game() -> None:
             pg.draw.circle(screen, (0, 255, 0), (g.middle_x, g.middle_y), g.player_hitbox_radius, 1)
 
         bullet_batch = []
-        bullet_gestorben = False
         for bullet in g.player_bullets:
-            if bullet.move():
-                bullet_gestorben = True
-            else:
+            if not bullet.move():
                 bullet_batch.append(bullet.draw_data())
         screen.blits(bullet_batch)
-        if bullet_gestorben:
-            g.player_bullets = [b for b in g.player_bullets if b.alive]
 
         # Bullet-Meteor Kollisionserkennung
         meteors_to_remove = []
@@ -144,7 +139,8 @@ def play_game() -> None:
                     if meteor.health <= 0:
                         meteors_to_remove.append(meteor)
                         if g.debug:
-                            print(f"{meteor.name} ist gestorben!")
+                            print(f"{meteor.name} ist zerstört!")
+                    #stoppt witeres prüfen eines bullet auf collision
                     break
         
         # Entferne tote Meteoriten

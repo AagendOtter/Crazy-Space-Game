@@ -24,8 +24,9 @@ def input():
     if keys[pygame.K_e] and globals.debug:
         summon_meteor(speed=0.2)   
     if keys[pygame.K_SPACE]:
-        globals.cooldown -= 1
         if globals.cooldown <= 0:
             globals.cooldown = 20 #cooldown von 20 ticks, damit nicht zu viele projektile auf einmal gespawnt werden
             shoot(10, 500, 10)
+    
+    globals.cooldown -= 1
     move()
