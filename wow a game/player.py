@@ -34,7 +34,7 @@ def move():
 
     
     
-def shoot(dmg, range, speed, angle_offset=0):
+def old_shoot(dmg, range, speed, angle_offset=0):
     # spawn bullet at player screen center translated to world-relative coordinates
     start_x = g.middle_x - g.pos_x
     start_y = g.middle_y - g.pos_y
@@ -46,4 +46,26 @@ def summon_meteor(health=100, damage=10, speed=0):
     meteor_count += 1
     g.objects.append(Meteor(f"Meteor{meteor_count}", health, damage, speed, g.meteor1_img))
 
+def shoot_body(dmg, reichweite, speed, schuss_anz, rot = 0):
+    # mehrere bullets nebeneinander abfeuern (senkrecht zur schussrichtung versetzt)
+    direction_rad = (-g.rotation_deg + rot) * pi / 180
+    bullet_breite = g.bullet_img.get_width()
 
+    # einheitsvektor senkrecht zur schussrichtung, damit die bullets nebeneinander liegen
+    perp_x = cos(direction_rad + pi / 2)
+    perp_y = sin(direction_rad + pi / 2)
+
+    for i in range(schuss_anz):
+        # bullets symmetrisch um die mitte verteilen
+        offset = (i - (schuss_anz - 1) / 2) * bullet_breite
+        start_x = g.middle_x - g.pos_x + perp_x * offset
+        start_y = g.middle_y - g.pos_y + perp_y * offset
+        g.player_bullets.append(Bullet([start_x, start_y], direction_rad, speed, dmg, reichweite, g.bullet_img))
+
+def shoot(dmg, reichweite, speed, vorne=0, schräg=0, seite=0, hinten=0):
+    shoot_body(dmg, reichweite, speed, vorne)
+    shoot_body(dmg, reichweite, speed, schräg, 45)
+    shoot_body(dmg, reichweite, speed, schräg, -45)
+    shoot_body(dmg, reichweite, speed, seite, 90)
+    shoot_body(dmg, reichweite, speed, seite, -90)
+    shoot_body(dmg, reichweite, speed, hinten, 180)
