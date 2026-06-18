@@ -159,7 +159,16 @@ def play_game() -> None:
         for planet in g.planets:
             planet.player_meet()
                 
-            
+        pg.draw.rect(g.screen,"white", (50,g.scr_height-50,g.maxhealth*4+10,40))
+        pg.draw.rect(g.screen,"red", (55,g.scr_height-45,g.lives*4,30))
+
+
+        if g.cooldown<600:
+            cd = g.cooldown/2
+        else:
+            cd =300
+        pg.draw.rect(g.screen,"white", (50,g.scr_height-100,310,40))
+        pg.draw.rect(g.screen,"blue", (55,g.scr_height-95,cd,30))
 
         pg.display.update()
         dt = g.clock.tick(60) #60 fps

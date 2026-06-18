@@ -69,6 +69,7 @@ speed = 0.1
 #player
 
 lives = 100
+maxhealth = 100
 cooldown = 0#cooldown für die schussfrequenz
 
 #gegner
