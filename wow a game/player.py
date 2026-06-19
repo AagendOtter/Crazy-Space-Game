@@ -44,7 +44,8 @@ def old_shoot(dmg, range, speed, angle_offset=0):
 def summon_meteor(health=100, damage=10, speed=0):
     global meteor_count
     meteor_count += 1
-    g.objects.append(Meteor(f"Meteor{meteor_count}", health, damage, speed, g.meteor1_img))
+    # Möglichkeit weitere Meteoren einfügbar
+    g.objects.append(Meteor(f"Meteor{meteor_count}", health, damage, speed, g.meteor1_img[3]))
 
 def shoot_body(dmg, reichweite, speed, schuss_anz, rot = 0):
     # mehrere bullets nebeneinander abfeuern (senkrecht zur schussrichtung versetzt)
