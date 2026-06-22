@@ -45,7 +45,12 @@ player_hitbox_radius = 40#max(player_base.get_width(), player_base.get_height())
 bullet_img = pg.image.load(os.path.join(img_path,"Bullet.png")).convert_alpha()
 #bullet_img = pg.transform.scale(bullet_img, (bullet_img.get_width()*5, bullet_img.get_height()*5))
 
-meteor1_img = pg.image.load(os.path.join(img_path,"Meteor.jpg")).convert_alpha()
+meteor1_img = [
+	pg.image.load(os.path.join(img_path, 'Meteor',"Meteor1.png")).convert_alpha(), 
+	pg.image.load(os.path.join(img_path, 'Meteor',"Meteor2.png")).convert_alpha(),
+	pg.image.load(os.path.join(img_path, 'Meteor',"Meteor3.png")).convert_alpha(),
+	pg.image.load(os.path.join(img_path, 'Meteor',"Meteor4.png")).convert_alpha()
+]
 
 middle_x = scr_width // 2 
 middle_y = scr_height // 2
