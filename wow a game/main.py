@@ -32,7 +32,7 @@ def play_game() -> None:
     #Zeichnen: konsistenter Snapshot des Weltzustands ---
         world.draw_background()
         world.draw_objects() 
-        world.draw_bullets()         # meteore/gegner + planeten
+        world.draw_bullets()          # meteore/gegner + planeten
         show()                        # spieler
         world.draw_arrow()            # shop-pfeil (falls aktiv)
         hud.draw_hud()                # leben- + cooldown-balken
