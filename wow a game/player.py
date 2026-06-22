@@ -1,5 +1,7 @@
 from math import cos, sin, pi
 
+import pygame as pg
+
 import globals as g
 from fremd import blitRotate
 from objects import Bullet, Meteor
@@ -8,6 +10,9 @@ meteor_count = 0
 
 def show():
     blitRotate(g.screen, g.player_base, (g.middle_x , g.middle_y), (g.player_base.get_width() // 2, g.player_base.get_height() // 2), g.rotation_deg-90)
+    # Hitbox des Spielers visualisieren
+    if g.debug:
+        pg.draw.circle(g.screen, (0, 255, 0), (g.middle_x, g.middle_y), g.player_hitbox_radius, 1)
 
 def move():
     g.rotation_deg += g.right 
@@ -41,7 +46,7 @@ def old_shoot(dmg, range, speed, angle_offset=0):
     direction_rad = -(g.rotation_deg + angle_offset) * pi / 180
     g.player_bullets.append(Bullet([start_x, start_y], direction_rad, speed, dmg, range, g.bullet_img))
 
-def summon_meteor(health=100, damage=10, speed=0):
+def summon_meteor(health=100, damage=10, speed:float=0):
     global meteor_count
     meteor_count += 1
     g.objects.append(Meteor(f"Meteor{meteor_count}", health, damage, speed, g.meteor1_img))

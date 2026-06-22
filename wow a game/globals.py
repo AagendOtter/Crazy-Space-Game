@@ -38,7 +38,8 @@ pg.display.set_caption("Wow a game")
 #Bilder
 img_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "images")
 
-player_base = pg.image.load(os.path.join(img_path,"SpaceShipSmall.png")).convert_alpha()
+player_base = pg.image.load(os.path.join(img_path,"spaceShip.png")).convert_alpha()
+player_base = pg.transform.scale(player_base, (80, 80))
 player_hitbox_radius = 40#max(player_base.get_width(), player_base.get_height()) // 2
 
 bullet_img = pg.image.load(os.path.join(img_path,"Bullet.png")).convert_alpha()
