@@ -2,6 +2,7 @@
 import pygame
 import globals
 from player import move, shoot, summon_meteor
+from scenes import pause_screen
 
 
 def input():
@@ -10,6 +11,8 @@ def input():
             globals.playing = False
         if  event.type == pygame.KEYDOWN and event.key == pygame.K_f:
             globals.shoparrow = not globals.shoparrow
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            pause_screen()
     globals.forward = 0
     globals.right = 0
     keys = pygame.key.get_pressed()
