@@ -201,7 +201,12 @@ class Bullet():
 class Planet():
     def __init__(self, name, position, image, size, geg_fkt=None):
         self.name = name
-        self.image = pygame.transform.scale(image, (size, size))
+        img_h, img_w =image.get_height(), image.get_width()
+        if img_h == max(img_h, img_w):
+            self.image = pygame.transform.scale(image, (size, img_w * size/img_h))
+        else:
+            self.image = pygame.transform.scale(image, (img_h * size/img_w, size))
+
         self.size = size
         self.position = position
         self.geg_fkt = geg_fkt
