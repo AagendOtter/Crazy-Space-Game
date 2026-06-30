@@ -1,6 +1,7 @@
 import pygame as pg
 import globals as g
 from world import Bg
+from save_sys import speichern, laden
 
 
 def start_screen():
@@ -64,6 +65,10 @@ def pause_screen():
 def open_trade():
     tradeing = True
     in_shop = g.to_buy[:3]
+    img_w = g.screen.get_width()/4
+    img_h = img_w*70/50
+    img_y = (g.scr_height-img_h)/2
+    dist_x = (g.screen.get_width()-3*img_w)/4
     while tradeing:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -72,11 +77,13 @@ def open_trade():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     tradeing = False
-            pressed = False
-            mouse_pos = pg.mouse.get_pos()
-            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                pressed = True
 
         g.screen.fill((0, 0, 0))
+
+        for i in range(len(in_shop)):
+            x = (i+1)*dist_x + i * img_w
+            in_shop[i].render((x,img_y))
+
+        
         pg.display.update()
         g.clock.tick(60)

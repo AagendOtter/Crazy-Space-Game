@@ -13,11 +13,19 @@ import hud
 from player import show
 from scenes import open_trade, start_screen
 
+#temp
+from shop import Trade
+
 # Trade-Callback verdrahten (verhindert Import-Zyklus world <-> scenes)
 world.tradeplanet.geg_fkt = open_trade
 
 # temp meteors zum testen
 world.spawn_test_meteors()
+
+# temp
+g.to_buy.append(Trade("More Monney",[0,10,100],"money",100))
+g.to_buy.append(Trade("More Monney",[0,10,100],"money",100))
+g.to_buy.append(Trade("More Monney",[0,10,100],"money",100))
 
 
 def play_game() -> None:
@@ -29,7 +37,7 @@ def play_game() -> None:
         world.handle_bullet_hits()    # bullet-meteor treffer + aufräumen
         world.update_enemies()        # gegner-schüsse + planeten-kontakt
 
-    #Zeichnen: konsistenter Snapshot des Weltzustands ---
+    #Zeichnen
         world.draw_background()
         world.draw_objects() 
         world.draw_bullets()          # meteore/gegner + planeten

@@ -87,8 +87,4 @@ planets = [] #Liste aller Planeten, die es gibt
 
 to_buy = []
 
-
-
-
-
-    
+all_vars = dir()   

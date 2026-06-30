@@ -101,26 +101,32 @@ class Meteor(Opponent):
 
     _hitbox_cache = {}
 
-    def __init__(self, name, health, damage, speed, image,hitbox_radius:int=None): # type: ignore
+    def __init__(self, name, health, damage, speed, image,hitbox_radius:int=None,size:int=None,position=None,direction=None): # type: ignore
         super().__init__(name, health, damage, speed, image)
-        self.size = randint(50, 100)  # Size of the meteor
+        self.size = size if size is not None else randint(50, 100)
         self.image = pygame.transform.scale(self.image, (self.size, self.size))
 
-        
+
         if hitbox_radius is not None:
             self.hitbox_radius = hitbox_radius
         else:
             self.hitbox_radius = self.size / 2
-        t = randint(0, 1)
-        if t == 0:
-            self.position = [randint(0,1)*g.scr_width-self.size/2-g.pos_x, randint(0, g.scr_height)-self.size/2-g.pos_y]
-        else:
-            self.position = [randint(0, g.scr_width)-self.size/2-g.pos_x, randint(0,1)*g.scr_height-self.size/2-g.pos_y]
-        #self.position = [100, 100]
 
-        dx = g.middle_x - (self.position[0] + g.pos_x + self.size / 2)
-        dy = g.middle_y - (self.position[1] + g.pos_y + self.size / 2)
-        self.direction = atan2(dy, dx)
+        if position is not None and direction is not None:
+            # geladener Meteor: Zustand exakt uebernehmen
+            self.position = position
+            self.direction = direction
+        else:
+            # neuer Meteor: Startposition am Rand wuerfeln, Richtung zur Mitte
+            t = randint(0, 1)
+            if t == 0:
+                self.position = [randint(0,1)*g.scr_width-self.size/2-g.pos_x, randint(0, g.scr_height)-self.size/2-g.pos_y]
+            else:
+                self.position = [randint(0, g.scr_width)-self.size/2-g.pos_x, randint(0,1)*g.scr_height-self.size/2-g.pos_y]
+
+            dx = g.middle_x - (self.position[0] + g.pos_x + self.size / 2)
+            dy = g.middle_y - (self.position[1] + g.pos_y + self.size / 2)
+            self.direction = atan2(dy, dx)
 
         self.x_movement = self.speed * cos(self.direction)
         self.y_movement = self.speed * sin(self.direction)
@@ -159,7 +165,6 @@ class Meteor(Opponent):
             g.lives -= self.damage
             return self
         return None
-    
 
 class Bullet():
     def __init__(self, position, direction, speed, damage, range, image):
@@ -220,4 +225,31 @@ class Planet():
             g.rotation_deg = 90
 
 class Button():
-    pass
+    def __init__(self, x, y, scale, img, pressed_img) -> None: # type: ignore
+        width = img.get_width() * scale
+        height = img.get_height() * scale
+        self.img = pygame.transform.scale(img, (width,height))
+        self.hover_img = pygame.transform.scale(pressed_img, (width,height))
+        self.rect = self.img.get_rect()
+        self.rect.topleft = (x,y)
+        self.clicked = False
+
+    def draw_and_isclicked(self):
+        pos = pygame.mouse.get_pos()
+        action = False
+        
+        if pygame.mouse.get_pressed()[0] == 0:
+            self.clicked = False
+
+        if self.rect.collidepoint(pos):
+            
+            if pygame.mouse.get_pressed()[0] and not self.clicked:
+                self.clicked = True
+                action = True    
+            g.screen.blit(self.hover_img, self.rect.topleft)
+        else:
+            g.screen.blit(self.img, self.rect.topleft)
+
+        return action
+    
+        
